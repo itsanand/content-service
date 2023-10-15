@@ -30,3 +30,13 @@ class InvalidPageValue:  # pylint: disable=too-few-public-methods
         """invalid page limit"""
 
         return {"code": 400, "error": "Page value is invalid"}
+
+
+class InternalCommunication:  # pylint: disable=too-few-public-methods
+    """class for internal communication failure"""
+
+    @staticmethod
+    def error() -> dict[str, Union[str, int]]:
+        """internal communication failure"""
+
+        return {"code": 500, "error": "Failed to connect with user interaction server"}

@@ -1,5 +1,6 @@
 """Handles endpoints for content service"""
 from typing import Final
+from httpx import ConnectError
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.datastructures import UploadFile
@@ -8,6 +9,7 @@ from content_service.exceptions import (
     MissingContentFile,
     ContentDoesNotExistError,
     InvalidPageValue,
+    InternalCommunication,
 )
 from content_service.services.content_service import ContentService
 
@@ -22,6 +24,7 @@ class ContentEndpoint:
     SUCCESS: Final[int] = 200
     CREATED: Final[int] = 201
     NOT_FOUND: Final[int] = 404
+    SERVER_ERROR: Final[int] = 500
 
     @classmethod
     async def create_content(cls, request: Request) -> JSONResponse:
@@ -102,3 +105,7 @@ class ContentEndpoint:
             return JSONResponse(content, status_code=cls.SUCCESS)
         except TypeError:
             return JSONResponse(InvalidPageValue.error(), status_code=cls.BAD_REQUEST)
+        except ConnectError:
+            return JSONResponse(
+                InternalCommunication.error(), status_code=cls.SERVER_ERROR
+            )

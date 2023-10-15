@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: Content Service - OpenAPI 3.0
+  description: Content service to perform CRUD over content resource
+  contact:
+    email: cu.18bcs2174@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:9000
+paths:
+  /content:
+    post:
+      description: Create new content record
+      operationId: add-content
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: 10 data added
+        '409':
+          description: Missing CSV file from body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 409
+                  error:
+                    type: string
+                    example: Csv file is not present in the body
+  /content/new:
+    get:
+      description: fetch latest content record sort by publish date
+      operationId: get-all-new-content
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Content'
+        '409':
+          description: Invalid page value
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  error:
+                    type: string
+                    example: Invalid page value 
+  /content/top:
+    get:
+      description: fetch top content record sort by likes and reads
+      operationId: get-all-top-content
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: "title1"
+                    story:
+                      type: string
+                      example: "story1"
+                    totalReads:
+                      type: integer
+                      example: 10
+                    totalLikes:
+                      type: integer
+                      example: 5
+        '400':
+          description: Invalid page value
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  error:
+                    type: string
+                    example: Invalid page value
+        '500':
+          description: Internal communication Failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
+                  error:
+                    type: string
+                    example: Internal Server Communication Error
+  /content/{title}:
+    patch:
+      description: update existing content record
+      operationId: update-content
+      parameters:
+        - in: path
+          name: title
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/Content'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '404':
+          description: Content does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Content not Found
+    delete:
+      description: delete existing record
+      operationId: delete-content
+      parameters:
+        - in: path
+          name: title
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+                example: None
+        '404':
+          description: Content does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Content not Found
+    get:
+      description: get existing record
+      operationId: get-content
+      parameters:
+        - in: path
+          name: title
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '404':
+          description: Content does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Content not Found
+components:
+  schemas:
+    Content:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "title1"
+        story:
+          type: string
+          example: "story1"
