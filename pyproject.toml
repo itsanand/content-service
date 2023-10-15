@@ -10,6 +10,8 @@ authors = ["Developer <cu.18bcs2174@gmail.com>"]
 python = "^3.11"
 starlette = "0.31.1"
 uvicorn = "0.23.2"
+python-multipart = "0.0.6"
+python-dateutil = "2.8.2"
 
 [tool.poetry.dev-dependencies]
 flake8 = "6.1.0"

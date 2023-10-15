@@ -21,9 +21,8 @@ class Content(BASE):  # type: ignore # pylint: disable=too-few-public-methods
     """Content model"""
 
     __tablename__ = "Content"
-    id: Column = Column(String, primary_key=True)
-    title: Column = Column(String, unique=True)
-    content: Column = Column(String)
+    title: Column = Column(String, primary_key=True)
+    story: Column = Column(String)
     publishedDate: Column = Column(DateTime)
 
 
