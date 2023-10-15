@@ -5,6 +5,11 @@ from starlette.config import Config
 CONFIG = Config(".env")
 BASE_DIR = Path(__file__).parent
 
+
+USER_INTERACTION_HOST = CONFIG(
+    "USER_INTERACTION_HOST", cast=str, default="http://localhost:9000"
+)
+
 DB_HOST = CONFIG("DB_HOST", cast=str, default="localhost")
 DB_NAME = CONFIG("DB_NAME", cast=str, default="db_content")
 DB_USER = CONFIG("DB_USER", cast=str, default="postgres")

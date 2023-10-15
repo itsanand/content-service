@@ -89,3 +89,16 @@ class ContentEndpoint:
             return JSONResponse(content, status_code=cls.SUCCESS)
         except TypeError:
             return JSONResponse(InvalidPageValue.error(), status_code=cls.BAD_REQUEST)
+
+    @classmethod
+    async def fetch_top_content(cls, request: Request) -> JSONResponse:
+        """Handled fetch top contents"""
+
+        try:
+            page: str = request.query_params.get("page", "1")
+            content: list[dict[str, str | int]] = await cls.svc.read_top_content(
+                int(page)
+            )
+            return JSONResponse(content, status_code=cls.SUCCESS)
+        except TypeError:
+            return JSONResponse(InvalidPageValue.error(), status_code=cls.BAD_REQUEST)
