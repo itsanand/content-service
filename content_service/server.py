@@ -18,7 +18,7 @@ routes: list[Route] = [
     Route("/content/{title}", content_endpoint.update_content, methods=["PATCH"]),
     Route("/content/{title}", content_endpoint.delete_content, methods=["DELETE"]),
     Route("/content/{title}", content_endpoint.fetch_content, methods=["GET"]),
-    Route("/docs", swagger_doc.swagger_ui, methods=["GET"]),
+    Route("/content-service/docs", swagger_doc.swagger_ui, methods=["GET"]),
     Route("/spec", swagger_doc.get_spec, methods=["GET"]),
 ]
 
