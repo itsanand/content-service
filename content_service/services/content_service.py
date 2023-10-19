@@ -126,7 +126,7 @@ class ContentService:
 
         async with self.async_session() as db_session:  # type: ignore
             async with AsyncClient() as client:
-                url: str = f"{Config.USER_INTERACTION_HOST}/contents?page={page}"
+                url: str = f"http://{Config.USER_INTERACTION_HOST}/contents?page={page}"
                 response: Response = await client.get(
                     url, headers=self.INTERNAL_HEADERS, timeout=10.0
                 )

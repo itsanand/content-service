@@ -16,8 +16,11 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: string
-              format: binary
+              type: object
+              properties:
+                content:
+                  type: string
+                  format: binary
         required: true
       responses:
         '200':
@@ -205,7 +208,7 @@ paths:
         - in: path
           name: title
           schema:
-            type: integer
+            type: string
           required: true
       responses:
         '200':
