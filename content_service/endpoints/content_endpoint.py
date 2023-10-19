@@ -48,8 +48,8 @@ class ContentEndpoint:
 
         try:
             title: str = request.path_params["title"].lower().replace(" ", "_")
-            body: bytes = await request.body()
-            content = await cls.svc.update_content_service(title, body.decode("utf-8"))
+            body: dict[str, str] = await request.json()
+            content = await cls.svc.update_content_service(title, body["story"])
             return JSONResponse(content, status_code=cls.SUCCESS)
         except AttributeError:
             return JSONResponse(
