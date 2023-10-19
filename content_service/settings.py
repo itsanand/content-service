@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).parent
 USER_INTERACTION_HOST = CONFIG(
     "USER_INTERACTION_HOST", cast=str, default="localhost:7000"
 )
+USER_SERVICE_HOST = CONFIG("USER_SERVICE_HOST", cast=str, default="localhost:8000")
 
 DB_HOST = CONFIG("DB_HOST", cast=str, default="localhost:5432")
 DB_NAME = CONFIG("DB_NAME", cast=str, default="db_content")
