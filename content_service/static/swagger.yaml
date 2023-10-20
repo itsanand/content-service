@@ -12,6 +12,12 @@ paths:
     post:
       description: Create new content record
       operationId: add-content
+      parameters:
+        - in: query
+          name: userID
+          schema:
+            type: string
+          required: true
       requestBody:
         content:
           multipart/form-data:
@@ -55,6 +61,11 @@ paths:
           name: page
           schema:
             type: integer
+        - in: query
+          name: userID
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: Successful operation
@@ -86,6 +97,11 @@ paths:
           name: page
           schema:
             type: integer
+        - in: query
+          name: userID
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: Successful operation
@@ -144,6 +160,11 @@ paths:
           schema:
             type: string
           required: true
+        - in: query
+          name: userID
+          schema:
+            type: string
+          required: true
       requestBody:
         content:
           application/json:
@@ -179,6 +200,11 @@ paths:
           schema:
             type: string
           required: true
+        - in: query
+          name: userID
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: Successful operation
@@ -207,6 +233,11 @@ paths:
       parameters:
         - in: path
           name: title
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: userID
           schema:
             type: string
           required: true

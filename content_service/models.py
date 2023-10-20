@@ -24,6 +24,7 @@ class Content(BASE):  # type: ignore # pylint: disable=too-few-public-methods
     title: Column = Column(String, primary_key=True)
     story: Column = Column(String)
     publishedDate: Column = Column(DateTime)
+    userID: Column = Column(String)
 
 
 if __name__ == "__main__":
