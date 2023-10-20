@@ -167,13 +167,23 @@ class ContentService:
             titles: list[str] = [
                 each_data["title"] for each_data in read_like_list  # type: ignore
             ]
-            query = select(Content).filter(Content.title.in_(titles))
+            query = select(
+                Content.title,
+                Content.story,
+                Content.publishedDate,
+                Content.userID,
+            ).filter(Content.title.in_(titles))
             content = await db_session.execute(query)
             db_data: list[Content] = content.all()
             curr_data_len: int = len(db_data)
             if curr_data_len < (page * self.DATA_PER_PAGE):
                 query = (
-                    select(Content)
+                    select(
+                        Content.title,
+                        Content.story,
+                        Content.publishedDate,
+                        Content.userID,
+                    )
                     .filter(Content.title.not_in(titles))
                     .offset((page - 1) * self.DATA_PER_PAGE)
                     .limit((page * self.DATA_PER_PAGE) - curr_data_len)
@@ -187,7 +197,7 @@ class ContentService:
                 {
                     "title": content["title"],  # type: ignore
                     "story": content_dict[content["title"]].story,  # type: ignore
-                    "publishedDate": content_dict[content["title"]].publishedDate,  # type: ignore
+                    "publishedDate": str(content_dict[content["title"]].publishedDate),
                     "userID": content_dict[content["title"]].userID,  # type: ignore
                     "totalReads": content["totalReads"],
                     "totalLikes": content["totalLikes"],
@@ -198,7 +208,7 @@ class ContentService:
                 {
                     "title": title,  # type: ignore
                     "story": content.story,  # type: ignore
-                    "publishedDate": content.publishedDate,  # type: ignore
+                    "publishedDate": str(content.publishedDate),
                     "userID": content.userID,  # type: ignore
                     "totalReads": 0,
                     "totalLikes": 0,
